@@ -1,11 +1,11 @@
 import React ,  { useState } from 'react';
-import {StyleSheet, View, Text, Button ,TextInput} from 'react-native';
-
+import {StyleSheet, View, Text ,TextInput , Platform} from 'react-native';
+import Button from './components/Button';
 
 const App = props => {
 let [result , setResult] = useState(0);
-let [num1 , setNum1] = useState('');
-let [num2 , setNum2] = useState('');
+let [num1 , setNum1] = useState('25');
+let [num2 , setNum2] = useState('4');
 
 
 
@@ -13,32 +13,33 @@ let [num2 , setNum2] = useState('');
   return(
 
       <View style = {styles.container}>
-        <Text style = {styles.text} >Math Guru</Text>
+        <Text style = {styles.text}  >Math Guru {Platform.OS} </Text>
         
-        <TextInput style ={styles.input} autoCapitalize='none' keyboardType='number-pad' autoFocus={false} value={num1} onChangeText={val => setNum1(val)} />
+        <TextInput style ={styles.input} autoCapitalize='none' keyboardType='number-pad' autoFocus={true} value={num1} onChangeText={val => setNum1(val)} />
         <TextInput style ={styles.input} autoCapitalize='none' keyboardType='number-pad' autoFocus={false}  value={num2} onChangeText={val => setNum2(val)}/>
 
         <View style = {styles.btncontainer}>
            
-        <Button style = {{fontSize:30}} title = "+" color='red' onPress={()=>{
+        <Button style = {{color:'red'}} title = "+"  onPress={()=>{
           const val1 = parseFloat(num1)
           const val2 = parseFloat(num2)
           setResult(val1+val2)
 
         }} />
-        <Button style = {{fontSize:30}} title = "-" color='blue' onPress={()=>{
+
+        <Button style = {{color:'orange'}} title = "-" onPress={()=>{
           const val1 = parseFloat(num1)
           const val2 = parseFloat(num2)
           setResult(val1-val2)
 
         }} />
-        <Button style = {{fontSize:30}} title = "*" color='green'onPress={()=>{
+        <Button style = {{color:'blue'}} title = "*" onPress={()=>{
           const val1 = parseFloat(num1)
           const val2 = parseFloat(num2)
           setResult(val1*val2)
 
         }} />
-        <Button style = {{fontSize:30}} title = "/" color='black' onPress={()=>{
+        <Button  title = "/" onPress={()=>{
           const val1 = parseFloat(num1)
           const val2 = parseFloat(num2)
           if(val2 <= 0)
