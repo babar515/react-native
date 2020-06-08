@@ -1,5 +1,5 @@
 import React  from 'react';
-import {StyleSheet, View, Text , ScrollView, SafeAreaView } from 'react-native';
+import {StyleSheet, View, Text , FlatList, SafeAreaView } from 'react-native';
 
 const App = () => {
 
@@ -24,33 +24,17 @@ const App = () => {
 
   return (
     <SafeAreaView style = {styles.container}>
-    <ScrollView horizontal={true} contentContainerStyle = {{ alignItems:'flex-start'}} >
     
-    {
-      items.map(item => {
-        return(
-          <View key= {item.id} style= {styles.listItem}>
-            <Text style={styles.text}>{item.name}</Text>
-          </View>
-        )
-      })
-    }
-    
-    </ScrollView>
+  <FlatList style={styles.text} data={items}  
+  renderItem={({item})=>
+  <View style = {{...styles.listItem, margin: 20}} >
+    <Text>{item.name}</Text>
+    </View>
+    } 
+  keyExtractor={({id},index)=>index.toString()  }>
 
-    <ScrollView  contentContainerStyle = {{alignItems:'flex-start'}} >
-    
-    {
-      items.map(item => {
-        return(
-          <View key= {item.id} style= {styles.listItem}>
-            <Text style={styles.text}>{item.name}</Text>
-          </View>
-        )
-      })
-    }
-    
-    </ScrollView>
+
+    </FlatList>
 
     </SafeAreaView>
   )
