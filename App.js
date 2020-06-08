@@ -1,38 +1,60 @@
-import React ,  { useState } from 'react';
-import {StyleSheet, View, Text ,Image,ImageBackground, Dimensions } from 'react-native';
+import React  from 'react';
+import {StyleSheet, View, Text , ScrollView, SafeAreaView } from 'react-native';
 
+const App = () => {
 
-const App = props => {
+  const items = [
+    {id:1 , name: 'a'},
+    {id:2 , name: 'b'},
+    {id:3 , name: 'c'},
+    {id:4 , name: 'd'},
+    {id:5 , name: 'e'},
+    {id:6 , name: 'f'},
+    {id:7 , name: 'g'},
+    {id:8 , name: 'h'},
+    {id:9 , name: 'i'},
+    {id:10 , name: 'j'},
+    {id:11, name: 'k'},
+    {id:12 , name: 'l'},
+    {id:13 , name: 'm'},
+    {id:14 , name: 'n'},
+    {id:15, name: 'o'},
 
+  ]
 
-let [position , setPosition] =  useState({
-  top:0,bottom:0,left:0,right:0
-})
+  return (
+    <SafeAreaView style = {styles.container}>
+    <ScrollView horizontal={true} contentContainerStyle = {{ alignItems:'flex-start'}} >
+    
+    {
+      items.map(item => {
+        return(
+          <View key= {item.id} style= {styles.listItem}>
+            <Text style={styles.text}>{item.name}</Text>
+          </View>
+        )
+      })
+    }
+    
+    </ScrollView>
 
-setTimeout(()=>{
-  setPosition(prevState => ({
-    top:Math.floor(Math.random()*(Dimensions.get('screen').height-100)),
-    left:Math.floor(Math.random()*(Dimensions.get('screen').width-100)),
-    right:Math.floor(Math.random()*(Dimensions.get('screen').width-100)),
-    bottom:Math.floor(Math.random()*(Dimensions.get('screen').height-100))
-  }))
-}, 1000)
-  
-  return(
+    <ScrollView  contentContainerStyle = {{alignItems:'flex-start'}} >
+    
+    {
+      items.map(item => {
+        return(
+          <View key= {item.id} style= {styles.listItem}>
+            <Text style={styles.text}>{item.name}</Text>
+          </View>
+        )
+      })
+    }
+    
+    </ScrollView>
 
-    <ImageBackground 
-    source={require('./assets/pond.jpg')}
-    style={{width:'100%',height:'100%'}}>
-      <View style={styles.container}>
-      <Image source={require('./assets/fish.png')}
-       style={{width:50,height:50 ,
-       top:position.top,bottom:position.bottom,left:position.left,right:position.right 
-       , position:'absolute'}} ></Image>
-       </View>
-    </ImageBackground>
+    </SafeAreaView>
   )
 }
-
 
 
 
@@ -40,11 +62,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
    
-    alignItems: 'center',
-   marginVertical: 80
+   
+  
   },
   text:{
-    color:'red',fontSize:25
+    color:'black',
+    fontSize:25,
+
   },
   btncontainer:{
     flexDirection:'row',
@@ -59,6 +83,14 @@ const styles = StyleSheet.create({
     marginVertical:10,
     fontSize:22,
     width:'100%'
+  },
+  listItem:{
+    backgroundColor:'gray',
+    margin:5,
+    padding:10,
+    width:100,
+    flexDirection:'row'
+
   }
 });
 
