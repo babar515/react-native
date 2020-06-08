@@ -1,82 +1,89 @@
-import React  from 'react';
-import {StyleSheet, View, Text , FlatList, SafeAreaView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+	StyleSheet,
+	View,
+	Text,
+	FlatList,
+	SafeAreaView,
+	ActivityIndicator,
+} from 'react-native';
 
-const App = () => {
+const App = (props) => {
+	let [update, setUpdate] = useState(true);
+	let [data, setData] = useState(null);
+	let [loader, setLoader] = useState(false);
 
-  const items = [
-    {id:1 , name: 'a'},
-    {id:2 , name: 'b'},
-    {id:3 , name: 'c'},
-    {id:4 , name: 'd'},
-    {id:5 , name: 'e'},
-    {id:6 , name: 'f'},
-    {id:7 , name: 'g'},
-    {id:8 , name: 'h'},
-    {id:9 , name: 'i'},
-    {id:10 , name: 'j'},
-    {id:11, name: 'k'},
-    {id:12 , name: 'l'},
-    {id:13 , name: 'm'},
-    {id:14 , name: 'n'},
-    {id:15, name: 'o'},
+	useEffect(() => {
+		setLoader(true);
+		fetch('https://jsonplaceholder.typicode.com/users', {
+			method: 'get',
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setData(data);
+				setLoader(false);
+			})
+			.catch((err) => console.log(err));
+		//.catch((err) => alert(err));
+	}, [update]);
 
-  ]
+	if (loader) {
+		return (
+			<View style={styles.loader}>
+				<ActivityIndicator color="red" size="large" />
+			</View>
+		);
+	}
 
-  return (
-    <SafeAreaView style = {styles.container}>
-    
-  <FlatList style={styles.text} data={items}  
-  renderItem={({item})=>
-  <View style = {{...styles.listItem, margin: 20}} >
-    <Text>{item.name}</Text>
-    </View>
-    } 
-  keyExtractor={({id},index)=>index.toString()  }>
-
-
-    </FlatList>
-
-    </SafeAreaView>
-  )
-}
-
-
+	return (
+		<SafeAreaView style={styles.container}>
+			<View>
+				<FlatList
+					data={data}
+					renderItem={({ item }) => (
+						<Text style={styles.text}>{item.name}</Text>
+					)}
+					keyExtractor={(item) => item.id.toString()}
+				/>
+			</View>
+		</SafeAreaView>
+	);
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-   
-   
-  
-  },
-  text:{
-    color:'black',
-    fontSize:25,
-
-  },
-  btncontainer:{
-    flexDirection:'row',
-   justifyContent:'space-between',
-   width:'50%',
-   
-  },
-  input:{
-    borderBottomWidth:2,
-    borderBottomColor:'blue',
-    padding:5,
-    marginVertical:10,
-    fontSize:22,
-    width:'100%'
-  },
-  listItem:{
-    backgroundColor:'gray',
-    margin:5,
-    padding:10,
-    width:100,
-    flexDirection:'row'
-
-  }
+	container: {
+		flex: 1,
+	},
+	loader: {
+		flex: 1,
+		justifyContent: 'center',
+		textAlign: 'center',
+	},
+	text: {
+		color: 'black',
+		fontSize: 25,
+		padding: 20,
+	},
+	btncontainer: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		width: '50%',
+	},
+	input: {
+		borderBottomWidth: 2,
+		borderBottomColor: 'blue',
+		padding: 5,
+		marginVertical: 10,
+		fontSize: 22,
+		width: '100%',
+	},
+	listItem: {
+		backgroundColor: 'gray',
+		margin: 5,
+		padding: 10,
+		width: 100,
+		flexDirection: 'row',
+	},
 });
-
 
 export default App;
