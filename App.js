@@ -1,63 +1,35 @@
 import React ,  { useState } from 'react';
-import {StyleSheet, View, Text ,TextInput , Platform} from 'react-native';
-import Button from './components/Button';
+import {StyleSheet, View, Text ,Image,ImageBackground, Dimensions } from 'react-native';
+
 
 const App = props => {
-let [result , setResult] = useState(0);
-let [num1 , setNum1] = useState('25');
-let [num2 , setNum2] = useState('4');
 
 
+let [position , setPosition] =  useState({
+  top:0,bottom:0,left:0,right:0
+})
 
+setTimeout(()=>{
+  setPosition(prevState => ({
+    top:Math.floor(Math.random()*(Dimensions.get('screen').height-100)),
+    left:Math.floor(Math.random()*(Dimensions.get('screen').width-100)),
+    right:Math.floor(Math.random()*(Dimensions.get('screen').width-100)),
+    bottom:Math.floor(Math.random()*(Dimensions.get('screen').height-100))
+  }))
+}, 1000)
   
   return(
 
-      <View style = {styles.container}>
-        <Text style = {styles.text}  >Math Guru {Platform.OS} </Text>
-        
-        <TextInput style ={styles.input} autoCapitalize='none' keyboardType='number-pad' autoFocus={true} value={num1} onChangeText={val => setNum1(val)} />
-        <TextInput style ={styles.input} autoCapitalize='none' keyboardType='number-pad' autoFocus={false}  value={num2} onChangeText={val => setNum2(val)}/>
-
-        <View style = {styles.btncontainer}>
-           
-        <Button style = {{color:'red'}} title = "+"  onPress={()=>{
-          const val1 = parseFloat(num1)
-          const val2 = parseFloat(num2)
-          setResult(val1+val2)
-
-        }} />
-
-        <Button style = {{color:'orange'}} title = "-" onPress={()=>{
-          const val1 = parseFloat(num1)
-          const val2 = parseFloat(num2)
-          setResult(val1-val2)
-
-        }} />
-        <Button style = {{color:'blue'}} title = "*" onPress={()=>{
-          const val1 = parseFloat(num1)
-          const val2 = parseFloat(num2)
-          setResult(val1*val2)
-
-        }} />
-        <Button  title = "/" onPress={()=>{
-          const val1 = parseFloat(num1)
-          const val2 = parseFloat(num2)
-          if(val2 <= 0)
-          {
-            setResult(0)
-          }
-          
-          else{setResult(val1/val2)}
-          
-
-        }} />
-        
-
-
-      </View>
-      <Text style = {styles.text}>Result: {result}  </Text> 
-      </View>
-
+    <ImageBackground 
+    source={require('./assets/pond.jpg')}
+    style={{width:'100%',height:'100%'}}>
+      <View style={styles.container}>
+      <Image source={require('./assets/fish.png')}
+       style={{width:50,height:50 ,
+       top:position.top,bottom:position.bottom,left:position.left,right:position.right 
+       , position:'absolute'}} ></Image>
+       </View>
+    </ImageBackground>
   )
 }
 
@@ -67,7 +39,7 @@ let [num2 , setNum2] = useState('4');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+   
     alignItems: 'center',
    marginVertical: 80
   },
